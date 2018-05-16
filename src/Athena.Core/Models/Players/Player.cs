@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Athena
+namespace Pugster
 {
     public class Player
     {

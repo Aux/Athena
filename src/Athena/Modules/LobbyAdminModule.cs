@@ -3,7 +3,7 @@ using Discord.Commands;
 using Discord.WebSocket;
 using System.Threading.Tasks;
 
-namespace Athena.Modules
+namespace Pugster.Modules
 {
     [RequireUserPermission(GuildPermission.Administrator)]
     public class LobbyAdminModule : ModuleBase<SocketCommandContext>

@@ -1,4 +1,4 @@
-﻿namespace Athena.Extensions
+﻿namespace Pugster.Extensions
 {
     public static class SkillRatingExtensions
     {

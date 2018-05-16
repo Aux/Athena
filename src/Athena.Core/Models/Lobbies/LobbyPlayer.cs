@@ -1,4 +1,4 @@
-﻿namespace Athena
+﻿namespace Pugster
 {
     public class LobbyPlayer
     {

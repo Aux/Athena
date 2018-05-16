@@ -3,7 +3,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Discord.Commands;
 
-namespace Athena
+namespace Pugster
 {
     public class RangeAttribute : ParameterPreconditionAttribute
     {

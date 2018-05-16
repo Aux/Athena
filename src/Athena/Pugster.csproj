@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Athena.Core\Athena.Core.csproj" />
+    <ProjectReference Include="..\Athena.Core\Pugster.Core.csproj" />
   </ItemGroup>
 
 </Project>

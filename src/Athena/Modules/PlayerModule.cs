@@ -2,7 +2,7 @@
 using Discord.WebSocket;
 using System.Threading.Tasks;
 
-namespace Athena
+namespace Pugster
 {
     public class PlayerModule : ModuleBase<SocketCommandContext>
     {

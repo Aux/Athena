@@ -3,7 +3,7 @@ using Discord.Commands;
 using Discord.WebSocket;
 using System.Threading.Tasks;
 
-namespace Athena
+namespace Pugster
 {
     public class LobbyModule : ModuleBase<SocketCommandContext>
     {

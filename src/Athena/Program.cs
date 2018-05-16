@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Athena
+namespace Pugster
 {
     class Program
     {

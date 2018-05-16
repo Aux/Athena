@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Pugster.Modules
@@ -12,7 +13,14 @@ namespace Pugster.Modules
         [Summary("Create a new game lobby")]
         public async Task CreateLobbyAsync(string name, [Remainder]string description)
         {
-            await Task.Delay(0);
+            string roleName = $"Lobby: {name}";
+            if (Context.Guild.Roles.Any(x => x.Name == roleName))
+            {
+                await ReplyAsync($"A role by the name of `{roleName}` already exists in this guild. Rename the role or choose another name for your lobby.");
+                return;
+            }
+
+            var role = await Context.Guild.CreateRoleAsync(roleName);
         }
 
         [Command("forcejoin")]

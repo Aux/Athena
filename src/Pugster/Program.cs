@@ -1,12 +1,10 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 
 namespace Pugster
 {
     class Program
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
-        }
+        static Task Main(string[] args)
+            => Startup.RunAsync(args);
     }
 }

@@ -41,7 +41,8 @@ namespace Pugster
 
             await _twitchChannel.LoginAsync(_config["tokens:twitch_channel"]);
 
-            //_commands.AddTypeReader<Uri>(new UriTypeReader());
+            _commands.AddTypeReader<Hero>(new HeroTypeReader());
+            _commands.AddTypeReader<BattleTag>(new BattleTagTypeReader());
 
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly());
         }

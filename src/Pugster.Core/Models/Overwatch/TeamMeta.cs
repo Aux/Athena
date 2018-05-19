@@ -2,13 +2,12 @@
 
 namespace Pugster
 {
-    public class Lobby
+    public class TeamMeta
     {
         public ulong Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public ulong RoleId { get; set; }
 
-        public List<LobbyPlayer> Players { get; set; }
+        public List<HeroTeamMeta> Heroes { get; set; }
     }
 }

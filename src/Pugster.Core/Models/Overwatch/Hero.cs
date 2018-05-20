@@ -9,7 +9,5 @@ namespace Pugster
         public string Description { get; set; }
         public string ImageUrl { get; set; }
         public HeroClass Class { get; set; }
-        
-        //public List<HeroTeamMeta> TeamMetas { get; set; }
     }
 }

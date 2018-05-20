@@ -1,5 +1,6 @@
 ﻿using Discord.Commands;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Pugster
@@ -9,10 +10,16 @@ namespace Pugster
         public override async Task<TypeReaderResult> Read(ICommandContext context, string input, IServiceProvider services)
         {
             var overwatch = (OverwatchController)services.GetService(typeof(OverwatchController));
-            var hero = await overwatch.GetHeroAsync(input);
+            var heroes = await overwatch.FindHeroesAsync(input, 2);
 
-            if (hero != null) return TypeReaderResult.FromSuccess(hero);
-            return TypeReaderResult.FromError(CommandError.ObjectNotFound, $"A hero by the name of `{input}` does not exist.");
+            string errorMsg = $"A hero by the name of `{input}` does not exist";
+
+            if (heroes != null && heroes.Count == 1)
+                return TypeReaderResult.FromSuccess(heroes.First());
+            if (heroes.Count > 1)
+                errorMsg += $", did you mean:\n{string.Join(", ", heroes.Select(x => x.Name))}";
+
+            return TypeReaderResult.FromError(CommandError.ObjectNotFound, errorMsg);
         }
     }
 }

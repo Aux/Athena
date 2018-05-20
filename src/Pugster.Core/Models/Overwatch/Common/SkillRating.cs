@@ -2,7 +2,7 @@
 {
     public enum SkillRating
     {
-        None = 0,
+        Unranked = 0,
         Bronze = 1,
         Silver = 1500,
         Gold = 2000,

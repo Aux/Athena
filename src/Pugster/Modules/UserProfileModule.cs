@@ -9,10 +9,12 @@ namespace Pugster
     public class UserProfileModule : PugsterModuleBase
     {
         private readonly ProfileController _profiles;
+        private readonly OverwatchController _overwatch;
 
-        public UserProfileModule(ProfileController profiles)
+        public UserProfileModule(ProfileController profiles, OverwatchController overwatch)
         {
             _profiles = profiles;
+            _overwatch = overwatch;
         }
         
         private async Task ModifyAsync(Action<Profile> action)
@@ -36,15 +38,19 @@ namespace Pugster
         }
 
         [Command("addheroes"), Alias("addhero")]
-        public async Task AddHeroesAsync(params Hero[] heroName)
+        public async Task AddHeroesAsync(params Hero[] heroes)
         {
-            await Task.Delay(0);
+            var profile = await _profiles.GetProfileAsync(Context.User.Id);
+            await _overwatch.AddProfileHeroesAsync(profile, heroes);
+            await ReplySuccessAsync();
         }
 
         [Command("removeheroes"), Alias("removehero", "deletehero", "delhero")]
-        public async Task RemoveHeroesAsync(params Hero[] heroName)
+        public async Task RemoveHeroesAsync(params Hero[] heroes)
         {
-            await Task.Delay(0);
+            var profile = await _profiles.GetProfileAsync(Context.User.Id);
+            await _overwatch.RemoveProfileHeroesAsync(profile, heroes);
+            await ReplySuccessAsync();
         }
     }
 }

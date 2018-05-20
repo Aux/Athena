@@ -29,7 +29,7 @@ namespace Pugster
         }
 
         [Command("showhero")]
-        public async Task ShowHeroAsync(Hero hero)
+        public async Task ShowHeroAsync([Remainder]Hero hero)
         {
             var embed = new EmbedBuilder()
                 .WithTitle($"{hero.Name} ({hero.Class.ToString()})")

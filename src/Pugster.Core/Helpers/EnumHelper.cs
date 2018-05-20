@@ -1,10 +1,10 @@
-﻿namespace Pugster.Extensions
+﻿namespace Pugster
 {
-    public static class SkillRatingExtensions
+    public static class EnumHelper
     {
         public static SkillRating GetSkillRating(int number)
         {
-            if (number < 1) return SkillRating.None;
+            if (number < 1) return SkillRating.Unranked;
             if (number < 1500) return SkillRating.Bronze;
             if (number < 2000) return SkillRating.Silver;
             if (number < 2500) return SkillRating.Gold;
@@ -12,7 +12,7 @@
             if (number < 3500) return SkillRating.Diamond;
             if (number < 4000) return SkillRating.Master;
             if (number <= 5000) return SkillRating.Grandmaster;
-            return SkillRating.None;
+            return SkillRating.Unranked;
         }
     }
 }

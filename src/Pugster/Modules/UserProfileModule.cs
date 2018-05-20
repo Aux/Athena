@@ -1,4 +1,5 @@
 ﻿using Discord.Commands;
+using System;
 using System.Threading.Tasks;
 
 namespace Pugster
@@ -14,16 +15,24 @@ namespace Pugster
             _profiles = profiles;
         }
         
+        private async Task ModifyAsync(Action<Profile> action)
+        {
+            var profile = await _profiles.GetProfileAsync(Context.User.Id);
+            action(profile);
+            await _profiles.ModifyAsync(profile);
+            await ReplySuccessAsync();
+        }
+
         [Command("setbattletag"), Alias("battletag", "setbtag", "btag")]
         public async Task SetBattleTagAsync(BattleTag battleTag)
         {
-            await Task.Delay(0);
+            await ModifyAsync(x => x.BattleTag = battleTag.ToString());
         }
 
         [Command("setskillrating"), Alias("skillrating", "setrating", "rating", "setsr", "sr")]
-        public async Task SetSkillRatingAsync([Range(0, 5001)]int skillRating)
+        public async Task SetSkillRatingAsync([Range(0, 5000)]int skillRating)
         {
-            await Task.Delay(0);
+            await ModifyAsync(x => x.SkillRating = skillRating);
         }
 
         [Command("addheroes"), Alias("addhero")]

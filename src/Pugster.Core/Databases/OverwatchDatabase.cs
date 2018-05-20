@@ -7,8 +7,8 @@ namespace Pugster
     public class OverwatchDatabase : DbContext
     {
         public DbSet<Hero> Heroes { get; set; }
-        public DbSet<TeamMeta> TeamMetas { get; set; }
-        public DbSet<HeroTeamMeta> HeroTeamMetas { get; set; }
+        //public DbSet<TeamMeta> TeamMetas { get; set; }
+        //public DbSet<HeroTeamMeta> HeroTeamMetas { get; set; }
 
         public OverwatchDatabase()
         {

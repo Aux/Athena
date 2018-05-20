@@ -10,7 +10,7 @@ namespace Pugster
         public override async Task<PreconditionResult> CheckPermissions(ICommandContext context, CommandInfo command, IServiceProvider services)
         {
             var profiles = (ProfileController)services.GetService(typeof(ProfileController));
-            bool profileExists = await profiles.ProfileExistsAsync(context.User.Id);
+            bool profileExists = await profiles.ExistsAsync(context.User.Id);
 
             if (profileExists)
                 return PreconditionResult.FromSuccess();

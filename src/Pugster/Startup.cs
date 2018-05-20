@@ -17,7 +17,8 @@ namespace Pugster
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(AppContext.BaseDirectory)
-                .AddJsonFile("_configuration.json");
+                .AddJsonFile("_configuration.json")
+                .AddJsonFile("_default_heroes.json");
             Configuration = builder.Build();
         }
 
@@ -37,6 +38,7 @@ namespace Pugster
             await provider.GetRequiredService<StartupService>().StartAsync();
 
             provider.GetRequiredService<LoggingService>();
+            provider.GetRequiredService<CommandHandler>();
 
             await Task.Delay(-1);
         }
@@ -64,8 +66,14 @@ namespace Pugster
                     CaseSensitiveCommands = false,
                     DefaultRunMode = RunMode.Async
                 }))
+                .AddDbContext<RootDatabase>()
+                .AddDbContext<OverwatchDatabase>()
+                .AddTransient<ProfileController>()
+                .AddTransient<OverwatchController>()
+                .AddSingleton<CommandHandler>()
                 .AddSingleton<StartupService>()
-                .AddSingleton<LoggingService>();
+                .AddSingleton<LoggingService>()
+                .AddSingleton(Configuration);
         }
     }
 }

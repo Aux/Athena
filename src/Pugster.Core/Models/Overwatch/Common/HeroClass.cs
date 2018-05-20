@@ -2,8 +2,9 @@
 {
     public enum HeroClass
     {
-        Damage,
-        Tank,
-        Healer
+        Undefined = -1,
+        Damage = 0,
+        Tank = 1,
+        Healer = 2
     }
 }

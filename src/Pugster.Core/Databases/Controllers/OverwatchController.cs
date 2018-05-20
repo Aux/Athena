@@ -12,7 +12,7 @@ namespace Pugster
         public Task<Hero> GetHeroAsync(ulong heroId)
             => _db.Heroes.SingleOrDefaultAsync(x => x.Id == heroId);
         public Task<Hero> GetHeroAsync(string heroName)
-            => _db.Heroes.SingleOrDefaultAsync(x => x.Name == heroName);
+            => _db.Heroes.SingleOrDefaultAsync(x => x.Name.ToLower() == heroName.ToLower());
 
         public Task<List<Hero>> GetHeroesAsync()
             => _db.Heroes.ToListAsync();

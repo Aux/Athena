@@ -1,4 +1,5 @@
-﻿using Discord.Commands;
+﻿using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
 using System.Threading.Tasks;
 
@@ -15,20 +16,21 @@ namespace Pugster
         
         [Command("createprofile")]
         [Summary("Create your overwatch pug profile")]
-        public async Task CreateProfileAsync(string battleTag, [Range(0, 5001)]int? skillRating = null)
+        public async Task CreateProfileAsync(string battleTag, [Range(0, 5000)]int skillRating = 0)
         {
-            var profile = await _profiles.CreateProfileAsync(new Profile
+            var profile = await _profiles.CreateAsync(new Profile
             {
+                Id = Context.User.Id,
                 Name = Context.User.ToString(),
                 BattleTag = battleTag,
-                SkillRating = skillRating ?? 0
+                SkillRating = skillRating
             });
 
             var dm = await Context.User.GetOrCreateDMChannelAsync();
             await dm.SendMessageAsync("Thank you for creating a profile with Pugster!" +
-                " You can now add addition information to your profile, such as preferred" +
-                " role, heroes, etc...\n\nType `!howto profilesetup` for more information");
-            await ReplyReactionAsync(":thumbsup:");
+                " You can now add additional information to your profile, such as preferred" +
+                " roles, heroes, etc...\n\nType `!howto profilesetup` for more information");
+            await ReplySuccessAsync();
         }
 
         [Command("profile"), Alias("player")]

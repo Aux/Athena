@@ -15,14 +15,14 @@ namespace Pugster
         private readonly TwitchChatClient _twitchBot;
         private readonly TwitchRestClient _twitchChannel;
         private readonly CommandService _commands;
-        private readonly IConfigurationRoot _config;
+        private readonly IConfiguration _config;
 
         public StartupService(
             DiscordSocketClient discord,
             TwitchChatClient twitchBot,
             TwitchRestClient twitchChannel,
             CommandService commands,
-            IConfigurationRoot config)
+            IConfiguration config)
         {
             _config = config;
             _discord = discord;
@@ -36,10 +36,10 @@ namespace Pugster
             await _discord.LoginAsync(TokenType.Bot, _config["tokens:discord"]);
             await _discord.StartAsync();
 
-            await _twitchBot.LoginAsync(_config["tokens:twitch_bot"]);
-            await _twitchBot.StartAsync();
+            //await _twitchBot.LoginAsync(_config["tokens:twitch_bot"]);
+            //await _twitchBot.StartAsync();
 
-            await _twitchChannel.LoginAsync(_config["tokens:twitch_channel"]);
+            //await _twitchChannel.LoginAsync(_config["tokens:twitch_channel"]);
 
             _commands.AddTypeReader<Hero>(new HeroTypeReader());
             _commands.AddTypeReader<BattleTag>(new BattleTagTypeReader());

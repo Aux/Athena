@@ -1,5 +1,7 @@
 ﻿{
   "tokens": {
-    "discord": null
+    "discord": null,
+    "twitch_bot": null,
+    "twitch_user":  null
   }
 }

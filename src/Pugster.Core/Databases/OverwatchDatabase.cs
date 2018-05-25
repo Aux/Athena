@@ -8,8 +8,6 @@ namespace Pugster
     {
         public DbSet<Hero> Heroes { get; set; }
         public DbSet<ProfileHero> ProfileHeroes { get; set; }
-        //public DbSet<TeamMeta> TeamMetas { get; set; }
-        //public DbSet<HeroTeamMeta> HeroTeamMetas { get; set; }
 
         public OverwatchDatabase()
         {

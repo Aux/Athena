@@ -44,6 +44,7 @@ namespace Pugster
             _commands.AddTypeReader<Hero>(new HeroTypeReader());
             _commands.AddTypeReader<Profile>(new ProfileTypeReader());
             _commands.AddTypeReader<BattleTag>(new BattleTagTypeReader());
+            _commands.AddTypeReader<Lobby>(new LobbyTypeReader());
 
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly());
         }

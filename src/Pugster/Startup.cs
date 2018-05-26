@@ -68,7 +68,7 @@ namespace Pugster
                 }))
                 .AddDbContext<RootDatabase>()
                 .AddDbContext<OverwatchDatabase>()
-                .AddTransient<ProfileController>()
+                .AddTransient<RootController>()
                 .AddTransient<OverwatchController>()
                 .AddSingleton<CommandHandler>()
                 .AddSingleton<StartupService>()

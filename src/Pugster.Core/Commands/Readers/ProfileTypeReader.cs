@@ -9,7 +9,7 @@ namespace Pugster
     {
         public override async Task<TypeReaderResult> Read(ICommandContext context, string input, IServiceProvider services)
         {
-            var profiles = (ProfileController)services.GetService(typeof(ProfileController));
+            var profiles = (RootController)services.GetService(typeof(RootController));
 
             Profile profile;
             var battleTag = BattleTag.Parse(input);

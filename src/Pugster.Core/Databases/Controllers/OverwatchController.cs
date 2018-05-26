@@ -7,11 +7,11 @@ namespace Pugster
 {
     public class OverwatchController : DbController<OverwatchDatabase>
     {
-        private readonly ProfileController _profiles;
+        private readonly RootController _profiles;
 
         public OverwatchController(OverwatchDatabase db, RootDatabase root) : base(db)
         {
-            _profiles = new ProfileController(root);
+            _profiles = new RootController(root);
         }
 
         //
@@ -71,7 +71,7 @@ namespace Pugster
                 await _db.ProfileHeroes.AddAsync(profileHero);
                 await _db.SaveChangesAsync();
             }
-            await _profiles.ModifyAsync(profile);
+            await _profiles.ModifyProfileAsync(profile);
         }
 
         public async Task RemoveProfileHeroesAsync(Profile profile, params Hero[] heroes)
@@ -81,7 +81,7 @@ namespace Pugster
 
             _db.ProfileHeroes.RemoveRange(removeHeroes);
             await _db.SaveChangesAsync();
-            await _profiles.ModifyAsync(profile);
+            await _profiles.ModifyProfileAsync(profile);
         }
     }
 }

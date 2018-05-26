@@ -7,6 +7,8 @@ namespace Pugster
     public class RootDatabase : DbContext
     {
         public DbSet<Profile> Profiles { get; set; }
+        public DbSet<Lobby> Lobbies { get; set; }
+        public DbSet<Player> Players { get; set; }
 
         public RootDatabase()
         {

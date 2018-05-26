@@ -8,10 +8,10 @@ namespace Pugster
     [RequireContext(ContextType.DM)]
     public class UserProfileModule : PugsterModuleBase
     {
-        private readonly ProfileController _profiles;
+        private readonly RootController _profiles;
         private readonly OverwatchController _overwatch;
 
-        public UserProfileModule(ProfileController profiles, OverwatchController overwatch)
+        public UserProfileModule(RootController profiles, OverwatchController overwatch)
         {
             _profiles = profiles;
             _overwatch = overwatch;
@@ -21,7 +21,7 @@ namespace Pugster
         {
             var profile = await _profiles.GetProfileAsync(Context.User.Id);
             action(profile);
-            await _profiles.ModifyAsync(profile);
+            await _profiles.ModifyProfileAsync(profile);
             await ReplySuccessAsync();
         }
 

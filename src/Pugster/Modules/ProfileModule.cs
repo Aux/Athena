@@ -8,10 +8,10 @@ namespace Pugster
 {
     public class ProfileModule : PugsterModuleBase
     {
-        private readonly ProfileController _profiles;
+        private readonly RootController _profiles;
         private readonly OverwatchController _overwatch;
 
-        public ProfileModule(ProfileController profiles, OverwatchController overwatch)
+        public ProfileModule(RootController profiles, OverwatchController overwatch)
         {
             _profiles = profiles;
             _overwatch = overwatch;
@@ -21,7 +21,7 @@ namespace Pugster
         [Summary("Create your overwatch pug profile")]
         public async Task CreateProfileAsync(string battleTag, [Range(0, 5000)]int skillRating = 0)
         {
-            var profile = await _profiles.CreateAsync(new Profile
+            var profile = await _profiles.CreateProfileAsync(new Profile
             {
                 Id = Context.User.Id,
                 Name = Context.User.ToString(),
@@ -38,7 +38,7 @@ namespace Pugster
 
         [Command("profile"), Alias("player")]
         [Summary("View a user's profile by name or battletag")]
-        public async Task ProfileAsync(Profile profile)
+        public async Task ProfileAsync([Remainder]Profile profile)
         {
             var user = Context.Guild.GetUser(profile.Id);
             var builder = new StringBuilder();
@@ -66,11 +66,11 @@ namespace Pugster
             await ReplyAsync("", embed: embed);
         }
         
-        [Command("profiles"), Alias("players")]
-        [Summary("View a summary of many users' profiles")]
-        public async Task ProfilesAsync()
-        {
-            await Task.Delay(0);
-        }
+        //[Command("profiles"), Alias("players")]
+        //[Summary("View a summary of many users' profiles")]
+        //public async Task ProfilesAsync()
+        //{
+        //    await Task.Delay(0);
+        //}
     }
 }

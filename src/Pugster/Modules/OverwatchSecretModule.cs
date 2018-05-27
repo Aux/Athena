@@ -1,7 +1,10 @@
 ﻿using Discord;
 using Discord.Commands;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Pugster
@@ -21,8 +24,8 @@ namespace Pugster
         [Command("loaddefaultheroes")]
         public async Task LoadDefaultHeroesAsync()
         {
-            var defaultHeroes = new List<Hero>();
-            _config.GetSection("Heroes").Bind(defaultHeroes);
+            string fileContents = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "_default_heroes.json"));
+            var defaultHeroes = JsonConvert.DeserializeObject<List<Hero>>(fileContents);
 
             await _overwatch.CreateHeroesAsync(defaultHeroes.ToArray());
             await ReplyAsync("Done");

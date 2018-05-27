@@ -17,8 +17,7 @@ namespace Pugster
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(AppContext.BaseDirectory)
-                .AddJsonFile("_configuration.json")
-                .AddJsonFile("_default_heroes.json");
+                .AddJsonFile("_configuration.json");
             Configuration = builder.Build();
         }
 

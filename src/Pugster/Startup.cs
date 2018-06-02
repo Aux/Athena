@@ -37,7 +37,10 @@ namespace Pugster
             await provider.GetRequiredService<StartupService>().StartAsync();
 
             provider.GetRequiredService<LoggingService>();
+            provider.GetRequiredService<BaseLoggingService>();
             provider.GetRequiredService<CommandHandler>();
+
+            await provider.GetRequiredService<TwitchHubService>().ListenAsync();
 
             await Task.Delay(-1);
         }
@@ -71,7 +74,9 @@ namespace Pugster
                 .AddTransient<OverwatchController>()
                 .AddSingleton<CommandHandler>()
                 .AddSingleton<StartupService>()
+                .AddSingleton<BaseLoggingService>()
                 .AddSingleton<LoggingService>()
+                .AddSingleton<TwitchHubService>()
                 .AddSingleton(Configuration);
         }
     }

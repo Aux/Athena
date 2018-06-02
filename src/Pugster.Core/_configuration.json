@@ -2,6 +2,9 @@
   "tokens": {
     "discord": null,
     "twitch_bot": null,
-    "twitch_user":  null
+    "twitch_user": null
+  },
+  "website": {
+    "url": "https://localhost:44349/"
   }
 }

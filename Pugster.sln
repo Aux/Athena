@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pugster", "src\Pugster\Pugs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pugster.Core", "src\Pugster.Core\Pugster.Core.csproj", "{684E354D-D89B-4076-8C71-32A9C8453E7F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pugster.Web", "src\Pugster.Web\Pugster.Web.csproj", "{68AB5AA4-C5A2-4262-A0D5-C01E2B33FD45}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{684E354D-D89B-4076-8C71-32A9C8453E7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{684E354D-D89B-4076-8C71-32A9C8453E7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{684E354D-D89B-4076-8C71-32A9C8453E7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68AB5AA4-C5A2-4262-A0D5-C01E2B33FD45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68AB5AA4-C5A2-4262-A0D5-C01E2B33FD45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68AB5AA4-C5A2-4262-A0D5-C01E2B33FD45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68AB5AA4-C5A2-4262-A0D5-C01E2B33FD45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

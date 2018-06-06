@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -23,7 +24,8 @@ namespace Pugster
 
             string logText = $"{DateTime.UtcNow.ToString("hh:mm:ss")} [{severity}] {source}: {message}";
             File.AppendAllText(_logFile, logText + "\n");
-
+            
+            Debug.WriteLine(logText);
             return Console.Out.WriteLineAsync(logText);
         }
     }

@@ -12,9 +12,9 @@ namespace Pugster
         [JsonProperty("game_id")]
         public ulong GameId { get; set; }
         [JsonProperty("community_ids")]
-        public ulong[] CommunityIds { get; set; }
-        [JsonProperty("type")]
-        public string Type { get; set; }
+        public string[] CommunityIds { get; set; }
+        //[JsonProperty("type")]                        // json property "type" interferes with signalr models :)
+        //public string StreamType { get; set; }
         [JsonProperty("title")]
         public string Title { get; set; }
         [JsonProperty("viewer_count")]

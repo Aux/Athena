@@ -27,8 +27,8 @@ namespace Pugster
         public Task ListenAsync()
         {
             _hub.On<ulong, TwitchStream>("stream_status", OnStreamStatus);
+            _hub.On<ulong, TwitchFollow>("follower", OnFollower);
             _hub.On<object>("subscriber", OnSubscriber);
-            _hub.On<object>("follower", OnFollower);
 
             return StartAsync();
         }
@@ -44,6 +44,7 @@ namespace Pugster
             catch (Exception ex)
             {
                 await _logger.LogAsync("Error", "TwitchHubService", ex.ToString());
+                await StopAsync();
             }
         }
 
@@ -52,15 +53,25 @@ namespace Pugster
             await _hub.StopAsync();
             IsConnected = false;
         }
-        
-        public Task SendStreamStatusAsync(ulong channelId, TwitchStream stream)
-            => _hub.InvokeAsync("SendStreamStatusAsync", channelId, stream);
 
-        private void OnStreamStatus(ulong channelId, TwitchStream stream)
-            => OnStreamStatusAsync(channelId, stream).GetAwaiter().GetResult();
-        private async Task OnStreamStatusAsync(ulong channelId, TwitchStream stream)
+        public Task SendStreamStatusAsync(ulong userId, TwitchStream stream)
+            => _hub.InvokeAsync("SendStreamStatusAsync", userId, stream);
+
+        private void OnStreamStatus(ulong userId, TwitchStream stream)
+            => OnStreamStatusAsync(userId, stream).GetAwaiter().GetResult();
+        private async Task OnStreamStatusAsync(ulong userId, TwitchStream stream)
         {
-            await _logger.LogAsync("Verbose", "TwitchHubService", $"Received stream status for id {channelId}");
+            await _logger.LogAsync("Verbose", "TwitchHubService", $"Received stream status for user `{userId}`");
+        }
+
+        public Task SendFollowerAsync(ulong userId, TwitchFollow follow)
+            => _hub.InvokeAsync("SendFollowerAsync", userId, follow);
+
+        private void OnFollower(ulong userId, TwitchFollow follow)
+            => OnFollowerAsync(userId, follow).GetAwaiter().GetResult();
+        private async Task OnFollowerAsync(ulong userId, TwitchFollow twitchFollow)
+        {
+            await _logger.LogAsync("Verbose", "TwitchHubService", $"Received follower for user `{userId}`");
         }
 
         public Task SendSubscriberAsync(object obj)
@@ -70,17 +81,7 @@ namespace Pugster
             => OnSubscriberAsync(obj).GetAwaiter().GetResult();
         private async Task OnSubscriberAsync(object obj)
         {
-            await _logger.LogAsync("Verbose", "TwitchHubService", $"Received subscriber for {obj}");
-        }
-
-        public Task SendFollowerAsync(object obj)
-            => _hub.InvokeAsync("SendFollowerAsync", obj);
-
-        private void OnFollower(object obj)
-            => OnFollowerAsync(obj).GetAwaiter().GetResult();
-        private async Task OnFollowerAsync(object obj)
-        {
-            await _logger.LogAsync("Verbose", "TwitchHubService", $"Received follower for {obj}");
+            await _logger.LogAsync("Verbose", "TwitchHubService", $"Received subscriber for user `{obj}`");
         }
     }
 }

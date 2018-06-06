@@ -18,19 +18,19 @@ namespace Pugster.Web
             await base.OnDisconnectedAsync(exception);
         }
         
-        public async Task SendStreamStatusAsync(ulong channelId, TwitchStream twitchStream)
+        public async Task SendStreamStatusAsync(ulong userId, TwitchStream twitchStream)
         {
-            await Clients.All.SendAsync("stream_status", new object[] { channelId, twitchStream });
+            await Clients.All.SendAsync("stream_status", userId, twitchStream);
+        }
+
+        public async Task SendFollowerAsync(ulong userId, TwitchFollow twitchFollow)
+        {
+            await Clients.All.SendAsync("follower", userId, twitchFollow);
         }
 
         public async Task SendSubscriberAsync(object obj)
         {
-            await Clients.All.SendAsync("subscriber", new[] { obj });
-        }
-
-        public async Task SendFollowerAsync(object obj)
-        {
-            await Clients.All.SendAsync("follower", new[] { obj });
+            await Clients.All.SendAsync("subscriber", obj);
         }
     }
 }

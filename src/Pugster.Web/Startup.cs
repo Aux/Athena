@@ -22,7 +22,10 @@ namespace Pugster.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddSignalR();
+            services.AddSignalR(options =>
+            {
+                options.EnableDetailedErrors = true;
+            });
 
             services.AddSingleton<TwitchHubService>()
                 .AddSingleton<BaseLoggingService>()

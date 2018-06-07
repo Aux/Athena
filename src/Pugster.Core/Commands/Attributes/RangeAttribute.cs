@@ -9,6 +9,7 @@ namespace Pugster
     {
         public int? MinValue { get; }
         public int? MaxValue { get; }
+        public bool AllowNull { get; set; } = false;
 
         public RangeAttribute(int min, int max)
         {
@@ -18,6 +19,8 @@ namespace Pugster
 
         public override Task<PreconditionResult> CheckPermissions(ICommandContext context, ParameterInfo parameter, object value, IServiceProvider services)
         {
+            if (value == null && AllowNull) return Task.FromResult(PreconditionResult.FromSuccess());
+
             int number = int.Parse(value.ToString());
             if (number < MinValue || number > MaxValue)
             {

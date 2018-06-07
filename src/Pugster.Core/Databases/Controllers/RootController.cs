@@ -65,6 +65,9 @@ namespace Pugster
             return lobbyResult.ToList();
         }
 
+        public Task<bool> LobbyHasPlayerAsync(ulong lobbyId, ulong profileId)
+            => _db.Players.AnyAsync(x => x.LobbyId == lobbyId && x.ProfileId == profileId);
+
         public async Task<Lobby> CreateLobbyAsync(Lobby lobby)
         {
             lobby.CreatedAt = DateTime.UtcNow;
@@ -88,6 +91,13 @@ namespace Pugster
             => _db.Players.SingleOrDefaultAsync(x => x.Id == id);
         public Task<List<Player>> GetPlayersAsync(ulong lobbyId)
             => _db.Players.Where(x => x.LobbyId == lobbyId).ToListAsync();
+
+        public Task<int> GetLobbyTotalPlayersAsync(ulong lobbyId)
+            => _db.Players.CountAsync(x => x.LobbyId == lobbyId);
+        public Task<List<Player>> GetLobbyPlayersAsync(ulong lobbyId)
+            => _db.Players.Where(x => x.LobbyId == lobbyId).ToListAsync();
+        public Task<Player> GetPlayerFromLobbyAsync(ulong lobbyId, ulong profileId)
+            => _db.Players.FirstOrDefaultAsync(x => x.LobbyId == lobbyId && x.ProfileId == profileId);
 
         public async Task<Player> CreatePlayerAsync(Player player)
         {

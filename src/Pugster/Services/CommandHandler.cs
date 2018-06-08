@@ -29,9 +29,8 @@ namespace Pugster
 
         private async Task OnMessageReceivedAsync(SocketMessage s)
         {
-            var msg = s as SocketUserMessage;
-            if (msg == null) return;
-
+            if (!(s is SocketUserMessage msg)) return;
+            
             var context = new PugsterCommandContext(_discord, msg);
             string prefix = "!";
 

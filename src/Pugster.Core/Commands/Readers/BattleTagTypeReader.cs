@@ -11,8 +11,7 @@ namespace Pugster
             var tag = BattleTag.Parse(input);
             if (tag.IsValid)
                 return Task.FromResult(TypeReaderResult.FromSuccess(tag));
-            else
-                return Task.FromResult(TypeReaderResult.FromError(CommandError.ParseFailed, $"`{input}` is not a valid battle tag"));
+            return Task.FromResult(TypeReaderResult.FromError(CommandError.ParseFailed, $"`{input}` is not a valid battle tag"));
         }
     }
 }

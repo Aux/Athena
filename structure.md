@@ -41,7 +41,11 @@ Forwards events from non-http connections into the Pugster signalr hubs.
 
 ### Pugster Api
 
-Internal actions and signalr event hub
+Rest api interface, signalr event hub, and various http stuff handling.
+
+#### Webhooks
+- Twitch's messed up websub system
+- Twitter's stream api
 
 
 ### Pugster Core

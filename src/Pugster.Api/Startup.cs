@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Pugster.Api.Hubs;
 
 namespace Pugster.Api
 {
@@ -26,6 +20,10 @@ namespace Pugster.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSignalR(options =>
+            {
+                options.EnableDetailedErrors = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +40,13 @@ namespace Pugster.Api
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<MainHub>("/hubs/main");
+                routes.MapHub<DiscordHub>("/hubs/discord");
+                routes.MapHub<TwitchHub>("/hubs/twitch");
+                routes.MapHub<TwitterHub>("/hubs/twitter");
+            });
         }
     }
 }

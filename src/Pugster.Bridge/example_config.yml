@@ -1,0 +1,19 @@
+﻿#
+## Discord
+#
+discord:
+    hub_url: 'api/hubs/discord'
+    token: null
+
+#
+## Twitch
+#
+twitch:
+    hub_url: 'api/hubs/twitch'
+    token: null
+
+#
+## General
+#
+dash_url: https://localhost:44351/
+api_url: https://localhost:44393/

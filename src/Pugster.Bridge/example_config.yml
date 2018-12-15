@@ -15,5 +15,4 @@ twitch:
 #
 ## General
 #
-dash_url: https://localhost:44351/
-api_url: https://localhost:44393/
+url: https://localhost:44351/

@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using Pugster.Dashboard.Hubs;
 
 namespace Pugster.Dashboard
@@ -20,6 +22,7 @@ namespace Pugster.Dashboard
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;
@@ -43,6 +46,7 @@ namespace Pugster.Dashboard
                 app.UseHsts();
             }
 
+            app.UseCors(options => { options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(); });
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

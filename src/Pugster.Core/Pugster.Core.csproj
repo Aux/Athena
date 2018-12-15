@@ -11,6 +11,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="2.2.0" />
     <PackageReference Include="NetEscapades.Configuration.Yaml" Version="1.6.0" />
+    <PackageReference Include="Voltaic.Serialization.Json" Version="0.2.1-build-00011" />
     <PackageReference Include="Wumpus.Net.Bot" Version="0.2.2-build-00031" />
   </ItemGroup>
 

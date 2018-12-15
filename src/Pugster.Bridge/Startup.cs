@@ -8,7 +8,7 @@ namespace Pugster.Bridge
     {
         public IConfiguration Configuration { get; set; }
 
-        private readonly DiscordManager _discord;
+        private readonly DiscordHandler _discord;
 
         public Startup(string[] args)
         {
@@ -18,7 +18,7 @@ namespace Pugster.Bridge
                 .AddYamlFile("_configuration.yml")
                 .Build();
 
-            _discord = new DiscordManager(Configuration);
+            _discord = new DiscordHandler(Configuration);
         }
 
         public async Task RunAsync()

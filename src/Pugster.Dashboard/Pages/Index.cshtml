@@ -2,13 +2,7 @@
 <div class="container">
     <div class="row">&nbsp;</div>
     <div class="row">
-        <div class="col-6">&nbsp;</div>
-        <div class="col-6">
-            User..........<input type="text" id="userInput" />
-            <br />
-            Message...<input type="text" id="messageInput" />
-            <input type="button" id="sendButton" value="Send Message" />
-        </div>
+        Discord Events
     </div>
     <div class="row">
         <div class="col-12">
@@ -29,11 +23,9 @@
 
     var connection = new signalR.HubConnectionBuilder().withUrl("/api/hubs/discord").build();
 
-    connection.on("message_created", function (user, message) {
-        var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        var encodedMsg = user + " says " + msg;
+    connection.on("message_created", function (json) {
         var li = document.createElement("li");
-        li.textContent = encodedMsg;
+        li.textContent = json;
         document.getElementById("messagesList").appendChild(li);
     });
 
@@ -45,14 +37,5 @@
         return console.error(err.toString());
     }).then(function () {
         connection.invoke("SubscribeEvent", "message_created");
-    });
-
-    document.getElementById("sendButton").addEventListener("click", function (event) {
-        var user = document.getElementById("userInput").value;
-        var message = document.getElementById("messageInput").value;
-        connection.invoke("RelayMessageCreated", user, message).catch(function (err) {
-            return console.error(err.toString());
-        });
-        event.preventDefault();
     });
 </script>

@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Configuration;
+using Pugster.Bridge.Logging;
+using Pugster.Serialization.Discord;
 using System;
 using System.IO;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Voltaic.Serialization.Json;
+using Voltaic.Logging;
 using Wumpus;
 using Wumpus.Bot;
 using Wumpus.Events;
@@ -16,12 +18,15 @@ namespace Pugster.Bridge
         private readonly IConfiguration _config;
         private readonly WumpusBotClient _bot;
         private readonly HubConnection _hub;
-        private readonly JsonSerializer _serializer;
+        private readonly DiscordJsonSerializer _serializer;
+
+        private DiscordLogManager _logManager;
 
         public DiscordHandler(IConfiguration config)
         {
             _config = config;
-            _serializer = new JsonSerializer();
+            _serializer = new DiscordJsonSerializer();
+            _logManager = new DiscordLogManager(LogSeverity.Verbose);
 
             _hub = new HubConnectionBuilder()
                 .WithUrl(Path.Combine(_config["url"], _config["discord:hub_url"]))
@@ -31,17 +36,16 @@ namespace Pugster.Bridge
             if (string.IsNullOrWhiteSpace(token))
                 throw new ArgumentNullException("Discord token is missing in the configuration file");
 
-            _bot = new WumpusBotClient();
+            _bot = new WumpusBotClient(logManager: _logManager);
             _bot.Authorization = new AuthenticationHeaderValue("Authorization", "Bot " + _config["discord:token"]);
-
-            _bot.Gateway.Connected += OnConnected;
-            _bot.Gateway.Disconnected += OnDisconnected;
+            
             _bot.Gateway.ReceivedPayload += OnPayloadReceived;
         }
 
         private void OnPayloadReceived(GatewayPayload payload, PayloadInfo info)
         {
-            Console.WriteLine($"Received ${payload.DispatchType}");
+            if (payload.DispatchType == null) return;
+            _logManager.Info("Bridge", $"Received {payload.DispatchType}");
             string methodName;
 
             switch (payload.DispatchType)
@@ -73,11 +77,18 @@ namespace Pugster.Bridge
                 case GatewayDispatchType.GuildMemberRemove:
                     methodName = "RelayUserLeft";
                     break;
+                case GatewayDispatchType.GuildMemberUpdate:
+
+                    methodName = "RelayUserLeft";
+                    break;
+                case GatewayDispatchType.PresenceUpdate:
+                    methodName = "RelayPresenceUpdate";
+                    break;
                 default:
                     return;
             }
 
-            var json = _serializer.WriteUtf8String(payload.Data);
+            var json = _serializer.WriteUtf8String(payload.Data).ToString();
             _hub.InvokeAsync(methodName, json).GetAwaiter().GetResult();
         }
 
@@ -90,16 +101,6 @@ namespace Pugster.Bridge
         public async Task StopAsync()
         {
             await _bot.StopAsync();
-        }
-
-        private void OnConnected()
-        {
-            Console.WriteLine("[Discord] Gateway connected");
-        }
-
-        private void OnDisconnected(Exception ex)
-        {
-            Console.WriteLine($"[Discord] Gateway disconnected with exception: {ex}");
         }
     }
 }

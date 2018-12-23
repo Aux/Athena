@@ -21,21 +21,23 @@
 <script>
     "use strict";
 
-    var connection = new signalR.HubConnectionBuilder().withUrl("/api/hubs/discord").build();
+    var discord = new signalR.HubConnectionBuilder().withUrl("/api/hubs/discord").build();
 
-    connection.on("message_created", function (json) {
+    discord.on("message_created", function (json) {
+        var msg = JSON.parse(json);
+        console.log("Received message_created for " + msg.id);
         var li = document.createElement("li");
-        li.textContent = json;
+        li.textContent = msg.author.username + ": " + msg.content;
         document.getElementById("messagesList").appendChild(li);
     });
-
-    connection.on("system", function (msg) {
+    
+    discord.on("system", function (msg) {
         console.log(msg);
     });
 
-    connection.start().catch(function (err) {
+    discord.start().catch(function (err) {
         return console.error(err.toString());
     }).then(function () {
-        connection.invoke("SubscribeEvent", "message_created");
+        discord.invoke("SubscribeEvent", "message_created");
     });
 </script>

@@ -10,5 +10,6 @@
         public const string ReactionRemoved = "reaction_removed";
         public const string UserJoined = "user_joined";
         public const string UserLeft = "user_left";
+        public const string PresenceUpdate = "presence_update";
     }
 }
